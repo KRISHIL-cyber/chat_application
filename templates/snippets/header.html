@@ -39,7 +39,7 @@
 							</div>
 
 							<div class="btn-group dropleft">
-								<img class="account-image rounded-circle m-auto d-block dropdown-toggle" id="id_profile_links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{% static 'logos/dummy_image.png' %}" alt="profile logo" width="40" height="40">
+								<img class="account-image rounded-circle m-auto d-block dropdown-toggle" id="id_profile_links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{request.user.profile_image.url}}" alt="profile logo" width="40" height="40">
 								<div class="dropdown-menu" aria-labelledby="id_profile_links">
 									<a class="dropdown-item" href="#">Account</a>
 									<a class="dropdown-item" href="#">Logout</a>
@@ -50,7 +50,7 @@
 					</div>
 				{% else %}
 					<a class="p-2 text-dark" href="#">Login</a>
-					<a class="btn btn-outline-primary" href="#">Register</a>
+					<a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a>
 				{% endif %}	
 			</nav>
 		</div>
@@ -71,7 +71,7 @@
 				<div class="dropdown dropleft p-2 mt-2">
 					<div class="d-flex flex-row">
 						<div class="btn-group dropleft">
-							<img class="account-image rounded-circle m-auto d-block dropdown-toggle" id="id_profile_links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{% static 'logos/dummy_image.png' %}" alt="profile logo" width="40" height="40">
+							<img class="account-image rounded-circle m-auto d-block dropdown-toggle" id="id_profile_links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{request.user.profile_image.url}}" alt="profile logo" width="40" height="40">
 							<div class="dropdown-menu" aria-labelledby="id_profile_links">
 								<a class="dropdown-item" href="#">Account</a>
 								<a class="dropdown-item" href="#">Logout</a>
@@ -81,7 +81,7 @@
 				</div>
 				{% else %}
 					<a class="p-2 text-dark" href="#">Login</a>
-					<a class="btn btn-outline-primary m-2" href="#">Register</a>
+					<a class="btn btn-outline-primary m-2" href="{% url 'register' %}">Register</a>
 				{% endif %}	
 			</nav>
 	  	</div>
