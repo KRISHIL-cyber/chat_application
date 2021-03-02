@@ -1,3 +1,4 @@
+{% load static %}
 <style type="text/css">
     .footer{
         min-height: 100px;
@@ -6,5 +7,6 @@
 
 <div class="d-flex flex-row align-items-center footer bg-white shadow-lg mt-4">
     <p class="m-auto"><span class="material-icons">copyright</span>2021 Chat App. All rights reserved.</p><br>
+    <img class="img-fluid mx-auto d-block" src="{% static 'logos/chat_logo.png' %}" alt="chat app logo" width="72" height="72"><br>
     <p class="m-auto">Made by Krishil, Yash, Nisarg.</p>
 </div>
