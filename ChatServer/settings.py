@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     #My apps
     'personal',
     'account',
+    'friend',
+    'chat',
+    'public_chat',
+    'notification',
 
     #Third party apps
     'django.contrib.admin',
@@ -45,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +83,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ChatServer.wsgi.application'
 
+ASGI_APPLICATION = 'ChatServer.routing.application'
 
+CHANNEL_LAYERS ={
+    'default':{
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG':{
+            "hosts": [('127.0.0.1', '6379')],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
