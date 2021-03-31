@@ -1,18 +1,27 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import UserProfile, Friends, Messages
+from .network import client
 
 
 def getFriendsList(id):
+    try:
+        user = UserProfile.objects.get(id=id)
+        ids = list(user.friends_set.all())
+        friends = []
+        for id in ids:
+            num = str(id)
+            # print(type(num), num)
+            fr = UserProfile.objects.get(id=int(num))
+            friends.append(fr)
+        return friends
+    except:
+        return []
 
-    user = UserProfile.objects.get(id=id)
-    ids = list(user.friends_set.all())
-    friends = []
-    for id in ids:
-        num = str(id)
-        # print(type(num), num)
-        fr = UserProfile.objects.get(id=int(num))
-        friends.append(fr)
-    return friends
+
+def getUserId(username):
+    use = UserProfile.objects.get(username=username)
+    id = use.id
+    return id
 
 
 def index(request):
@@ -21,7 +30,9 @@ def index(request):
         print("Not Logged In!")
         return render(request, "chat/index.html", {})
     else:
-        friends = getFriendsList(request.user.id)
+        username = request.user.username
+        id = getUserId(username)
+        friends = getFriendsList(id)
         return render(request, "chat/Base.html", {'friends': friends})
 
 
@@ -45,22 +56,63 @@ def search(request):
         users = users[:10]
     except:
         users = users[:]
-    friends = getFriendsList(request.user.id)
+    id = getUserId(request.user.username)
+    friends = getFriendsList(id)
     return render(request, "chat/search.html", {'users': users, 'friends': friends})
 
 
 def addFriend(request, name):
 
-    id = request.user.id
+    username = request.user.username
+    id = getUserId(username)
     friend = UserProfile.objects.get(username=name)
     curr_user = UserProfile.objects.get(id=id)
     print(curr_user.name)
     ls = curr_user.friends_set.all()
     flag = 0
     for username in ls:
-        if username.id == friend.id:
+        if username.friend == friend.id:
             flag = 1
+            break
     if flag == 0:
         print("Friend Added!!")
         curr_user.friends_set.create(friend=friend.id)
+        friend.friends_set.create(friend=id)
     return redirect("/search")
+
+
+def sortByTime(msg_ls):
+    cnt = 0
+    for i in range(len(msg_ls)):
+        min_ind = i
+        for j in range(i+1, len(msg_ls)):
+            if msg_ls[min_ind].time > msg_ls[j].time:
+                min_ind = j
+        msg_ls[i], msg_ls[min_ind] = msg_ls[min_ind], msg_ls[i]
+        cnt += 1
+        if cnt >= 10:
+            return msg_ls[:10]
+    return msg_ls
+
+
+def chat(request, username):
+    friend = UserProfile.objects.get(username=username)
+    id = getUserId(request.user.username)
+    curr_user = UserProfile.objects.get(id=id)
+    print("Name = ", curr_user)
+    print("Friend ID = ", friend.id)
+    ls = curr_user.messages_set.all()
+    ls2 = friend.messages_set.all()
+    msg_ls = []
+    for items in ls:
+        if items.receiver_name == friend.id:
+            msg_ls.append(items)
+
+    for items in ls2:
+        if items.receiver_name == id:
+            msg_ls.append(items)
+
+    msg_ls = sortByTime(msg_ls)
+    friends = getFriendsList(id)
+    return render(request, "chat/chats.html", {'messages': msg_ls, 'friends': friends,
+                                               'id': id, 'chat_name': friend.name})
