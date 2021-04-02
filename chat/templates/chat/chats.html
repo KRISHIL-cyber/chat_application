@@ -4,7 +4,7 @@
 {% block  content %}
 
         <div style="margin-top: 12px">
-            <h3>{{friend.name}}</h3>
+            <h1><span class="badge bg-warning text-dark">{{friend.name}}</span></h1>
         </div>
         <div class="messages" id="board">
             {% block message %}
@@ -14,7 +14,7 @@
             <form method="post" class="form-group" id="chat-box">
                 {% csrf_token %}
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
+                    <div class="input-group-prepend ex">
                         <input type="text" placeholder="Send a message..." name="message" id="msg_field">
                         <button type="submit" name="send" class="btn btn-success" id="send_btn">Send</button>
                     </div>
@@ -35,9 +35,9 @@
             }, 800);
          }
 
-        const text_box = '<div class="container darker">' +
+        const text_box = '<div class="container darker ex1">' +
             '<img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="right" style="width:100%;">' +
-            '<p>{description}</p>' +
+            '<p class="message_font">{description}</p>' +
             '<span class="time-right">{time}</span>' +
             '</div>'
 

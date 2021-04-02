@@ -4,15 +4,15 @@
 {% block message %}
 {% for message in messages %}
     {% if curr_user == message.sender_name %}
-        <div class="container darker">
+        <div class="container darker ex1">
             <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="right" style="width:100%;">
-            <p>{{message.description}}</p>
+            <p class="message_font">{{message.description}}</p>
             <span class="time-right">{{message.time}}</span>
         </div>
     {% else %}
-        <div class="container">
+        <div class="container ex">
             <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" style="width:100%;">
-            <p>{{message.description}}</p>
+            <p class="message_font">{{message.description}}</p>
             <span class="time-left">{{message.time}}</span>
         </div>
     {% endif %}

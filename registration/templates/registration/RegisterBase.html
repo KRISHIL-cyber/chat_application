@@ -8,17 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title%}{% endblock %}</title>
     <style>
-        .wrapper{
-            background-image: url("{% static 'images/background.png' %}");
+        body{
+            /* background-image: url("{% static 'images/xyz.jpg' %}"); */
+            color:black;
+            background-color: #f9f4f3;
             background-position: center;
             background-size: cover;
-            height: 750px;
+            height: 945px;
             overflow-x: hidden;
             background-repeat: no-repeat;
+            
         }
     </style>
 </head>
 <body>
+    <div class="container my-4 py-5">
     <div class="wrapper">
     <div class="row justify-content-center" style="padding-top: 100px">
         <div class="col-8">
@@ -37,6 +41,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    </div>
     </div>
 </body>
 </html>
